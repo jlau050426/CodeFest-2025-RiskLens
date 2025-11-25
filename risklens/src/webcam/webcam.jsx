@@ -5,7 +5,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import Webcam from "react-webcam";
-import "../App.css";
+import "./webcam.css";
 
 // --- COMPONENT: ACTIVITY CAMERA (With "Activate" Button) ---
 const ActivityCamera = ({ onCapture }) => {

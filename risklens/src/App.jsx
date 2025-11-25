@@ -1,195 +1,120 @@
-import ActivityCamera from "./webcam/webcam";
-
-//useState: for remembering state in functional componentss
-//useRef: to reference DOM elements or persist values across renders
-//useCallback: to memoize functions and prevent unnecessary re-creations 
-
-
-import { useState, useRef, useCallback } from "react";
-import Webcam from "react-webcam";
+import { useState} from 'react';
+import ActivityCamera from './webcam/webcam.jsx';
+import StepPersonal from './personal_info/personal_info.jsx';
+import PersonalityQuizModal from './random_quiz/random_quiz.jsx';
+import StepFinancial from './financial_profile/financial_profile.jsx';
+import StepVerification from './verification/verification.jsx';
 import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-} from "recharts";
-import "../src/App.css";
+  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
+  PieChart, Pie, Cell,
+  ResponsiveContainer
+} from 'recharts';
+import './App.css';
 
-
-
-// --- COMPONENT: PERSONALITY QUIZ MODAL ---
-const PersonalityQuizModal = ({ isOpen, onClose, onComplete }) => {
-  if (!isOpen) return null;
-
-  const handleQuizOption = (type) => {
-    onComplete(type);
-    onClose();
-  };
-
-
-  //personality quiz modal
-  //questions container
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h3>🧠 Rapid Personality Assessment</h3>
-        <p>How do you usually approach a high-stakes problem?</p>
-
-        <div className="quiz-options">
-          <button className="quiz-btn" onClick={() => handleQuizOption("INTJ")}>
-            <strong>Analyze It:</strong> I break it down logically and plan a
-            strategy.
-          </button>
-          <button className="quiz-btn" onClick={() => handleQuizOption("ENTP")}>
-            <strong>Debate It:</strong> I look for loopholes and brainstorm
-            creative fixes.
-          </button>
-          <button className="quiz-btn" onClick={() => handleQuizOption("ISFP")}>
-            <strong>Feel It:</strong> I trust my gut instinct and values.
-          </button>
-          <button className="quiz-btn" onClick={() => handleQuizOption("ESTP")}>
-            <strong>Wing It:</strong> I dive in and fix things as I go.
-          </button>
-        </div>
-        <button className="close-link" onClick={onClose}>
-          Cancel
-        </button>
+// --- WIZARD STEP 4: BEHAVIORAL ---
+const StepBehavioral = ({ formData, handleChange, openQuiz }) => (
+  <div className="fade-in">
+    <div className="form-group">
+      <label>Personality Profile (MBTI)</label>
+      <div className="quiz-group">
+        <input type="text" value={formData.mbti} readOnly placeholder="Pending Assessment..." />
+        <button className="secondary-btn" onClick={openQuiz}>⚡ Start Test</button>
       </div>
     </div>
-  );
-};
+    <div className="form-group">
+      <label>Statement of Purpose (Loan Essay)</label>
+      <textarea 
+        name="essay" 
+        rows="6" 
+        value={formData.essay} 
+        onChange={handleChange}
+        placeholder="Explain why you need this loan and how you plan to repay it..." 
+      />
+    </div>
+  </div>
+);
 
-
-// --- PAGE 1: INPUT PAGE ---
-// this is where user inputs data
+// --- PAGE: INPUT WIZARD CONTAINER ---
 const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
-  const [showQuiz, setShowQuiz] = useState(false); // set the quiz pop up state
+  const [step, setStep] = useState(1);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const TOTAL_STEPS = 4;
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  
+  const handleFileChange = (e, field) => {
+    setFormData({ ...formData, [field]: e.target.files[0] });
   };
 
   const handlePhotoCaptured = (image, tags) => {
-    setFormData((prev) => ({
-      ...prev,
-      activityImage: image,
-      activityTags: tags,
-    }));
+    setFormData(prev => ({ ...prev, activityImage: image, activityTags: tags }));
   };
 
   return (
-    <div className="page-container fade-in">
+    <div className="page-container">
       <section className="card input-section center-card">
         <div className="card-header">
-          <h2>📂 Data Ingestion</h2>
-          <p>Complete the profile to generate a risk assessment.</p>
-        </div>
-
-        {/* 1. PDF Upload */}
-        <div className="form-group">
-          <label>Upload Bank Statements (PDF)</label>
-          <div className="file-upload-box">
-            <input type="file" accept=".pdf" />
-            <span>📎 Drag & drop PDF here</span>
+          <div className="step-indicator">STEP {step} OF {TOTAL_STEPS}</div>
+          <h2>
+            {step === 1 && "👤 Personal Information"}
+            {step === 2 && "💰 Financial Profile"}
+            {step === 3 && "🔐 Verification"}
+            {step === 4 && "🧠 Behavioral Analysis"}
+          </h2>
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}></div>
           </div>
         </div>
 
-        {/* 2. Personality Test Button */}
-        <div className="form-group">
-          <label>Personality Profile (MBTI)</label>
-          <div className="quiz-group">
-            <input
-              type="text"
-              name="mbti"
-              value={formData.mbti}
-              readOnly
-              placeholder="Result will appear here..."
-            />
-            <button className="secondary-btn" onClick={() => setShowQuiz(true)}>
-              ⚡ Take Test
+        <div className="wizard-content">
+          {step === 1 && <StepPersonal formData={formData} handleChange={handleChange} />}
+          {step === 2 && <StepFinancial formData={formData} handleChange={handleChange} />}
+          {step === 3 && <StepVerification formData={formData} handleFileChange={handleFileChange} handlePhotoCaptured={handlePhotoCaptured} />}
+          {step === 4 && <StepBehavioral formData={formData} handleChange={handleChange} openQuiz={() => setShowQuiz(true)} />}
+        </div>
+
+        <div className="wizard-actions">
+          {step > 1 && (
+            <button className="secondary-btn back-btn" onClick={() => setStep(step - 1)}>← Back</button>
+          )}
+          
+          {step < TOTAL_STEPS ? (
+            <button className="analyze-btn next-btn" onClick={() => setStep(step + 1)}>Next Step →</button>
+          ) : (
+            <button className="analyze-btn finish-btn" onClick={onAnalyze} disabled={loading}>
+              {loading ? "🔄 Processing..." : "🚀 Run Risk Engine"}
             </button>
-          </div>
+          )}
         </div>
-
-        {/* 3. Camera Activity Log */}
-        <div className="form-group">
-          <label>Live Activity Verification</label>
-          <p className="helper-text">
-            Take a photo of your current activity/spending.
-          </p>
-          <ActivityCamera onCapture={handlePhotoCaptured} />
-        </div>
-
-        {/* 4. Daily Log Text */}
-        <div className="form-group">
-          <label>Daily Activity Log (Text)</label>
-          <textarea
-            name="dailyActivity"
-            rows="2"
-            value={formData.dailyActivity}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        {/* 5. Purpose */}
-        <div className="form-group">
-          <label>Loan Purpose</label>
-          <textarea
-            name="essay"
-            rows="4"
-            value={formData.essay}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <button className="analyze-btn" onClick={onAnalyze} disabled={loading}>
-          {loading ? "🔄 Analysing..." : "🚀 Run Model"}
-        </button>
       </section>
 
-      <PersonalityQuizModal
-        isOpen={showQuiz}
-        onClose={() => setShowQuiz(false)}
-        onComplete={(result) => setFormData({ ...formData, mbti: result })}
+      <PersonalityQuizModal 
+        isOpen={showQuiz} 
+        onClose={() => setShowQuiz(false)} 
+        onComplete={(result) => setFormData({...formData, mbti: result})} 
       />
     </div>
   );
 };
 
-// --- PAGE 2: RESULT PAGE ---
+// --- PAGE: RESULT DASHBOARD ---
 const ResultPage = ({ result, formData, onBack }) => {
   const personalityData = [
-    { subject: "Risk", A: 90, fullMark: 100 },
-    { subject: "Spending", A: 85, fullMark: 100 },
-    { subject: "Honesty", A: 40, fullMark: 100 },
-    { subject: "Stability", A: 30, fullMark: 100 },
-    { subject: "Logic", A: 80, fullMark: 100 },
+    { subject: 'Character', A: 90, fullMark: 100 },
+    { subject: 'Capacity', A: 85, fullMark: 100 },
+    { subject: 'Capital', A: 60, fullMark: 100 },
+    { subject: 'Conditions', A: 70, fullMark: 100 },
+    { subject: 'Collateral', A: 80, fullMark: 100 },
   ];
 
-  // Data for Financial Score Pie Chart
   const financialData = [
-    { name: "Score", value: result.finance_score, color: "#10b981" }, // Green for score
-    {
-      name: "Remaining",
-      value: 100 - result.finance_score,
-      color: "rgba(255,255,255,0.1)",
-    }, // Empty part
+    { name: 'Score', value: result.finance_score, color: '#10b981' },
+    { name: 'Remaining', value: 100 - result.finance_score, color: 'rgba(255,255,255,0.1)' }
   ];
 
-  // Data for AI Risk Score Pie Chart
   const aiRiskData = [
-    { name: "Score", value: result.ai_risk_score, color: "#ef4444" }, // Red for risk
-    {
-      name: "Remaining",
-      value: 100 - result.ai_risk_score,
-      color: "rgba(255,255,255,0.1)",
-    }, // Empty part
+    { name: 'Score', value: result.ai_risk_score, color: '#ef4444' },
+    { name: 'Remaining', value: 100 - result.ai_risk_score, color: 'rgba(255,255,255,0.1)' }
   ];
 
   const renderHighlightedEssay = (text, riskyWords) => {
@@ -198,14 +123,8 @@ const ResultPage = ({ result, formData, onBack }) => {
       <div className="essay-text">
         {text.split(" ").map((word, i) => {
           const clean = word.toLowerCase().replace(/[.,]/g, "");
-          const isRisky = riskyWords.some((rw) => clean.includes(rw));
-          return isRisky ? (
-            <span key={i} className="highlight-danger">
-              {word}{" "}
-            </span>
-          ) : (
-            <span key={i}>{word} </span>
-          );
+          const isRisky = riskyWords.some(rw => clean.includes(rw));
+          return isRisky ? <span key={i} className="highlight-danger">{word} </span> : <span key={i}>{word} </span>;
         })}
       </div>
     );
@@ -214,149 +133,108 @@ const ResultPage = ({ result, formData, onBack }) => {
   return (
     <div className="page-container fade-in">
       <section className="card result-section">
-        <div
-          className={`status-banner ${
-            result.decision === "REJECT" ? "danger" : "success"
-          }`}
-        >
+        <div className={`status-banner ${result.decision === "REJECT" ? "danger" : "success"}`}>
           <h1>{result.decision}</h1>
-          <span className="decision-label">AI RECOMMENDED ACTION</span>
+          <span className="decision-label">AI RECOMMENDED DECISION</span>
         </div>
 
         <div className="split-result">
-          {/* Chart Section (Left Column) */}
           <div className="chart-container">
-            <h3>🧠 {formData.mbti} Psychometric Profile</h3>
-            <div style={{ width: "100%", height: 250 }}>
+            <h3>🧠 5C's Credit Analysis</h3>
+            <div style={{ width: '100%', height: 250 }}>
               <ResponsiveContainer>
-                <RadarChart
-                  cx="50%"
-                  cy="50%"
-                  outerRadius="70%"
-                  data={personalityData}
-                >
+                <RadarChart cx="50%" cy="50%" outerRadius="70%" data={personalityData}>
                   <PolarGrid stroke="#475569" />
-                  <PolarAngleAxis
-                    dataKey="subject"
-                    tick={{ fill: "#94a3b8", fontSize: 10 }}
-                  />
-                  <PolarRadiusAxis
-                    angle={30}
-                    domain={[0, 100]}
-                    tick={false}
-                    axisLine={false}
-                  />
-                  <Radar
-                    name="User"
-                    dataKey="A"
-                    stroke="#3b82f6"
-                    fill="#3b82f6"
-                    fillOpacity={0.4}
-                  />
+                  <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 10 }} />
+                  <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                  <Radar name="User" dataKey="A" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.4} />
                 </RadarChart>
               </ResponsiveContainer>
             </div>
-
-            {/* Show Captured Image Summary */}
             {formData.activityTags.length > 0 && (
-              <div className="vision-summary">
-                <small>
-                  📸 Vision Detected: {formData.activityTags.join(", ")}
-                </small>
-              </div>
+              <div className="vision-summary"><small>📸 Verified: {formData.activityTags.join(", ")}</small></div>
             )}
           </div>
 
-          {/* Metrics Section (Right Column) */}
           <div className="metrics-column">
-            {/* Financial Score Chart */}
             <div className="metric-box chart-metric">
-              <span className="label">Financial Score</span>
+              <span className="label">Capacity Score</span>
               <div className="pie-chart-wrapper">
                 <ResponsiveContainer width="100%" height={100}>
                   <PieChart>
-                    <Pie
-                      data={financialData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={35}
-                      outerRadius={45}
-                      startAngle={90}
-                      endAngle={-270}
-                      dataKey="value"
-                    >
-                      {financialData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
+                    <Pie data={financialData} cx="50%" cy="50%" innerRadius={35} outerRadius={45} startAngle={90} endAngle={-270} dataKey="value">
+                      {financialData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
                     </Pie>
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="pie-value">
-                  <span className="value">{result.finance_score}</span>
-                </div>
+                <div className="pie-value"><span className="value">{result.finance_score}</span></div>
               </div>
             </div>
 
-            {/* AI Risk Score Chart */}
             <div className="metric-box chart-metric">
-              <span className="label">AI Risk Score</span>
+              <span className="label">Behavioral Risk</span>
               <div className="pie-chart-wrapper">
                 <ResponsiveContainer width="100%" height={100}>
                   <PieChart>
-                    <Pie
-                      data={aiRiskData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={35}
-                      outerRadius={45}
-                      startAngle={90}
-                      endAngle={-270}
-                      dataKey="value"
-                    >
-                      {aiRiskData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
+                    <Pie data={aiRiskData} cx="50%" cy="50%" innerRadius={35} outerRadius={45} startAngle={90} endAngle={-270} dataKey="value">
+                      {aiRiskData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
                     </Pie>
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="pie-value">
-                  <span className="value text-red">{result.ai_risk_score}</span>
-                </div>
+                <div className="pie-value"><span className="value text-red">{result.ai_risk_score}</span></div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Transparency Report */}
         <div className="transparency-box">
-          <p>
-            <strong>⚠️ Risk Factors Detected:</strong>
-          </p>
+          <p><strong>⚠️ Risk Factors Detected (NLP Analysis):</strong></p>
           {renderHighlightedEssay(formData.essay, result.risky_words)}
         </div>
       </section>
 
-      {/* Separate Container for the 3D Back Button */}
       <div className="bottom-action-container">
-        <button className="back-btn-3d" onClick={onBack}>
-          ← New Assessment
-        </button>
+        <button className="back-btn-3d" onClick={onBack}>← New Application</button>
       </div>
     </div>
   );
 };
 
-// --- MAIN APP ---
+// --- MAIN APP CONTROLLER ---
 function App() {
   const [currentPage, setCurrentPage] = useState("input");
+  // Initialize with all fields, including new personal ones
   const [formData, setFormData] = useState({
-    mbti: "",
-    dailyActivity: "I shop at luxury stores on weekends.",
-    essay:
-      "I need quick cash to cover some losses from a high-stakes investment.",
+    // Step 1: Personal
+    fullName: "",
+    nric: "",
+    phone: "",
+    email: "",
+    permAddress: "",
+    currAddress: "",
+    age: "",
+    maritalStatus: "Single",
+    dependents: 0,
+    residenceLength: "",
+    employment: "Employed", // Moved here as per request
+    
+    // Step 2: Financial
+    salary: 60000,
+    debt: 1500,
+    creditScore: 720,
+    employerName: "",
+
+    // Step 3: Verification
+    bankStatement: null,
+    transactionImg: null,
     activityImage: null,
     activityTags: [],
+
+    // Step 4: Behavioral
+    mbti: "", 
+    essay: "I need quick cash to cover some losses from a high-stakes investment.",
   });
+
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -368,33 +246,32 @@ function App() {
         decision: "REJECT",
         finance_score: 85,
         ai_risk_score: 88,
-        risky_words: ["high-stakes", "losses", "quick cash"],
+        risky_words: ["high-stakes", "losses", "quick cash"]
       });
       setLoading(false);
       setCurrentPage("result");
-    }, 1500);
+    }, 2000);
   };
 
   return (
     <div className="app-wrapper">
       <header className="navbar">
-        <div className="logo">
-          🛡️ RiskLens <span className="logo-ai">System</span>
-        </div>
+        <div className="logo">🛡️ RiskLens <span className="logo-ai">AI</span></div>
+        <div className="sys-status"><span className="status-dot"></span> SYSTEM ONLINE</div>
       </header>
 
       {currentPage === "input" ? (
-        <InputPage
-          formData={formData}
-          setFormData={setFormData}
-          onAnalyze={analyzeRisk}
-          loading={loading}
+        <InputPage 
+          formData={formData} 
+          setFormData={setFormData} 
+          onAnalyze={analyzeRisk} 
+          loading={loading} 
         />
       ) : (
-        <ResultPage
-          result={result}
-          formData={formData}
-          onBack={() => setCurrentPage("input")}
+        <ResultPage 
+          result={result} 
+          formData={formData} 
+          onBack={() => setCurrentPage("input")} 
         />
       )}
     </div>

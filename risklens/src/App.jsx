@@ -8,15 +8,39 @@ import "./App.css";
 function App() {
   const [currentPage, setCurrentPage] = useState("basicInfo"); // "basicInfo", "quiz", "riskOutput"
   const [formData, setFormData] = useState({
+    // Basic Information (matches JSON format)
+    name: "",
+    age: "",
+    email: "",
+    gross_monthly_income: "",
+    employment_status: "",
+    company_name: "",
+    website_url: "",
+    loan_purpose: "",
+    social_links: [],
+    // Quiz result
     mbti: "",
-    dailyActivity: "I shop at luxury stores on weekends.",
-    essay:
-      "I need quick cash to cover some losses from a high-stakes investment.",
-    activityImage: null,
+    // Legacy fields for backward compatibility with RiskOutputPage
+    essay: "",
     activityTags: [],
   });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Helper function to export form data in the required JSON format
+  const getFormDataAsJSON = () => {
+    return {
+      name: formData.name || "",
+      age: formData.age ? parseInt(formData.age) : 0,
+      email: formData.email || "",
+      gross_monthly_income: formData.gross_monthly_income ? parseFloat(formData.gross_monthly_income) : 0.0,
+      employment_status: formData.employment_status || "",
+      company_name: formData.company_name || "",
+      website_url: formData.website_url || "",
+      loan_purpose: formData.loan_purpose || "",
+      social_links: formData.social_links || [],
+    };
+  };
 
   const handleNextFromBasicInfo = () => {
     setCurrentPage("quiz");

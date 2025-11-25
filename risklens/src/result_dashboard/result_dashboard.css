@@ -1,0 +1,50 @@
+/* --- 8. RESULTS PAGE --- */
+.status-banner {
+  text-align: center;
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 25px;
+  position: relative;
+  overflow: hidden;
+}
+
+.status-banner.danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+  border: 1px solid var(--danger-glow);
+  color: #fca5a5;
+}
+
+.status-banner.success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+.status-banner h1 {
+  margin: 0;
+  font-size: 3.5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px currentColor;
+  /* Glowing Text */
+}
+
+.metric-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid var(--glass-border);
+}
+
+.metric-box .value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  display: block;
+  margin-top: 10px;
+}
+
+.text-red {
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}

@@ -1,0 +1,22 @@
+/* verification styling */
+
+
+.file-upload-box {
+  border: 2px dashed var(--glass-border);
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.01);
+  color: var(--text-dim);
+  transition: 0.3s;
+}
+
+.file-upload-box:hover {
+  border-color: var(--primary);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.file-upload-box input {
+  display: none; /* Often file inputs are hidden and triggered by the label/box */
+}

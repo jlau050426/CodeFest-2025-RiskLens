@@ -90,6 +90,7 @@ body {
 }
 
 /* --- 4. INPUTS & FORMS --- */
+/* GLOBAL FORM STYLES */
 .form-group {
   margin-bottom: 24px;
   position: relative;
@@ -130,7 +131,7 @@ textarea:focus {
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* --- 5. BUTTONS (The "Pop") --- */
+/* --- 5. BUTTONS--- */
 .analyze-btn {
   width: 100%;
   padding: 18px;
@@ -185,22 +186,8 @@ textarea:focus {
   color: white;
 }
 
-/* --- 6. FILE UPLOAD & CAMERA --- */
-.file-upload-box {
-  border: 2px dashed var(--glass-border);
-  padding: 25px;
-  border-radius: 12px;
-  text-align: center;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.01);
-  color: var(--text-dim);
-  transition: 0.3s;
-}
 
-.file-upload-box:hover {
-  border-color: var(--primary);
-  background: rgba(59, 130, 246, 0.05);
-}
+/* --- CAMERA --- */
 
 .camera-box {
   background: black;
@@ -367,78 +354,6 @@ textarea:focus {
 .quiz-btn:hover {
   border-color: var(--primary);
   transform: translateX(5px);
-}
-
-/* --- 9.5. QUIZ PAGE STYLES --- */
-.quiz-container {
-  padding: 20px 0;
-}
-
-.quiz-question {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.quiz-question h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--text-main);
-  margin: 0;
-}
-
-.quiz-options-full {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.quiz-btn-full {
-  width: 100%;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid var(--glass-border);
-  border-radius: 12px;
-  color: var(--text-main);
-  font-size: 1rem;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: var(--font-main);
-}
-
-.quiz-btn-full:hover {
-  border-color: var(--primary);
-  background: rgba(59, 130, 246, 0.1);
-  transform: translateX(5px);
-}
-
-.quiz-btn-full.selected {
-  border-color: var(--primary);
-  background: rgba(59, 130, 246, 0.2);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-}
-
-.quiz-btn-full strong {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--primary);
-  font-size: 1.1rem;
-}
-
-.quiz-result-preview {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 12px;
-  padding: 15px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.quiz-result-preview p {
-  margin: 0;
-  color: var(--success);
-  font-size: 1rem;
 }
 
 /* Page Navigation */
@@ -742,28 +657,6 @@ textarea:focus {
 
 .retake-link:active {
   box-shadow: inset 2px 2px 5px #0b0f16, inset -2px -2px 5px #212d3e;
-}
-
-/* --- EXISTING CSS (Paste previous CSS here) --- */
-
-/* --- NEW STYLES FOR PERSONAL INFO --- */
-
-.form-row {
-  display: flex;
-  gap: 20px;
-  width: 100%;
-}
-
-/* For rows with 3 inputs (Age, Marital, Dependents) */
-.form-row.three-col {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr;
-  gap: 20px;
-}
-
-/* Make inputs in rows take full width of their container */
-.form-row .form-group {
-  flex: 1;
 }
 
 /* --- WIZARD STYLING --- */

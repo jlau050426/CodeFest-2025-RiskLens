@@ -1,10 +1,11 @@
+import "./webcam.css";
+
 //useState: for remembering state in functional componentss
 //useRef: to reference DOM elements or persist values across renders
-//useCallback: to memoize functions and prevent unnecessary re-creations 
+//useCallback: to memoize functions and prevent unnecessary re-creations
 
 
 import { useState, useRef, useCallback } from "react";
-import Webcam from "react-webcam";
 import "../App.css";
 
 // --- COMPONENT: ACTIVITY CAMERA (With "Activate" Button) ---

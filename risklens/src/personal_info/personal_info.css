@@ -1,0 +1,19 @@
+/* --- NEW STYLES FOR PERSONAL INFO --- */
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+/* For rows with 3 inputs (Age, Marital, Dependents) */
+.form-row.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 20px;
+}
+
+/* Make inputs in rows take full width of their container */
+.form-row .form-group {
+  flex: 1;
+}

@@ -1,6 +1,7 @@
 import ActivityCamera from "../webcam/webcam";
 import "./verification.css";
 import "../../src/App.css";
+import AdvancedFileUpload from "./advancedFileUpload";
 
 // --- WIZARD STEP 3: VERIFICATION ---
 const StepVerification = ({ formData, handleFileChange, handlePhotoCaptured }) => (
@@ -19,6 +20,8 @@ const StepVerification = ({ formData, handleFileChange, handlePhotoCaptured }) =
         <span>{formData.transactionImg ? `🖼️ ${formData.transactionImg.name}` : "📎 Upload Transaction Screenshot"}</span>
       </div>
     </div>
+
+    <AdvancedFileUpload/>
     <div className="form-group">
       <label>Liveness Check (Robot Detection)</label>
       <ActivityCamera onCapture={handlePhotoCaptured} />

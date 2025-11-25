@@ -114,18 +114,21 @@ function App() {
 
   const analyzeRisk = async () => {
     setLoading(true);
-    // Simulate API Call
-    console.log(formData)
-    setTimeout(() => {
-      setResult({
-        decision: "REJECT",
-        finance_score: 85,
-        ai_risk_score: 88,
-        risky_words: ["high-stakes", "losses", "quick cash"]
-      });
-      setLoading(false);
-      setCurrentPage("result");
-    }, 2000);
+
+    const postData = new FormData();
+    postData.append()
+    // // Simulate API Call
+    // console.log(formData)
+    // setTimeout(() => {
+    //   setResult({
+    //     decision: "REJECT",
+    //     finance_score: 85,
+    //     ai_risk_score: 88,
+    //     risky_words: ["high-stakes", "losses", "quick cash"]
+    //   });
+    //   setLoading(false);
+    //   setCurrentPage("result");
+    // }, 2000);
   };
 
   return (

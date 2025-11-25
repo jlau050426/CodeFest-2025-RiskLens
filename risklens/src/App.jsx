@@ -14,8 +14,10 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
   const [showQuiz, setShowQuiz] = useState(false);
   const TOTAL_STEPS = 4;
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log("hello")
+  }
   const handleFileChange = (e, field) => {
     setFormData({ ...formData, [field]: e.target.files[0] });
   };
@@ -34,6 +36,7 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
             {step === 2 && "💰 Financial Profile"}
             {step === 3 && "🔐 Verification"}
             {step === 4 && "🧠 Behavioral Analysis"}
+            {/* {step === 5 && "🧠 Quick Questions"} */}
           </h2>
           <div className="progress-bar">
             <div className="progress-fill" style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}></div>
@@ -112,6 +115,7 @@ function App() {
   const analyzeRisk = async () => {
     setLoading(true);
     // Simulate API Call
+    console.log(formData)
     setTimeout(() => {
       setResult({
         decision: "REJECT",

@@ -103,7 +103,7 @@ function App() {
 
     // Step 4: Behavioral
     mbti: "", 
-    essay: "I need quick cash to cover some losses from a high-stakes investment.",
+    essay: "",
   });
 
   const [result, setResult] = useState(null);

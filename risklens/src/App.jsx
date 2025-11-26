@@ -5,14 +5,31 @@ import StepVerification from './verification/verification';
 import StepBehavioral from './behavioral/behavioral';
 import ResultPage from './result_dashboard/result_dashboard';
 import axios from 'axios';
-import { useState} from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
-// --- PAGE: INPUT WIZARD CONTAINER ---
+
 const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
   const [step, setStep] = useState(1);
   const [showQuiz, setShowQuiz] = useState(false);
   const TOTAL_STEPS = 4;
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      console.log("User is attempting to leave the webpage.");
+      // Use sendBeacon for reliable unload notification
+      const url = "http://localhost:8000/quit";
+      const data = JSON.stringify({ reason: "user left page" });
+        navigator.sendBeacon(url, data);
+      // Optionally show a confirmation dialog:
+      // event.preventDefault();
+      // event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,7 +42,6 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
   const handlePhotoCaptured = (image, tags) => {
     setFormData(prev => ({ ...prev, activityImage: image, activityTags: tags }));
   };
-
   return (
     <div className="page-container">
       <section className="card input-section center-card">
@@ -180,17 +196,17 @@ function App() {
       </header>
 
       {currentPage === "input" ? (
-        <InputPage 
-          formData={formData} 
-          setFormData={setFormData} 
-          onAnalyze={analyzeRisk} 
-          loading={loading} 
+        <InputPage
+          formData={formData}
+          setFormData={setFormData}
+          onAnalyze={analyzeRisk}
+          loading={loading}
         />
       ) : (
-        <ResultPage 
-          result={result} 
-          formData={formData} 
-          onBack={() => setCurrentPage("input")} 
+        <ResultPage
+          result={result}
+          formData={formData}
+          onBack={() => setCurrentPage("input")}
         />
       )}
     </div>

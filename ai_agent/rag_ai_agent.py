@@ -9,6 +9,10 @@ from langchain_community.document_loaders.parsers import PyPDFParser
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
+import time
+
+from sqlalchemy.testing.suite.test_reflection import metadata
+
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", google_api_key=api_key)
@@ -78,7 +82,7 @@ def store_company_document():
 def store_evaluation(evaluation_text):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     chunks = text_splitter.split_text(evaluation_text)
-    chunk_docs = [Document(page_content=chunk) for chunk in chunks]
+    chunk_docs = [Document(page_content=chunk, metadata={"timestamp":time.time()}) for chunk in chunks]
     vector_store = FAISS.from_documents(
         documents=chunk_docs,
         embedding=embeddings

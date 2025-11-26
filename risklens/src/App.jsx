@@ -8,6 +8,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "./App.css";
 import DarkQuizComponent from "./quiz/quiz";
+import SplashScreen from "./splash";
 
 const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
   const [step, setStep] = useState(1);
@@ -116,7 +117,7 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
               onClick={onAnalyze}
               disabled={loading}
             >
-              {loading ? "🔄 Processing..." : "🚀 Run Risk Engine"}
+              {loading ? <><SplashScreen isVisible={loading} /></> : "🚀 Run Risk Engine"}
             </button>
           )}
         </div>
@@ -213,16 +214,16 @@ function App() {
 
         axios
           .get('http://127.0.0.1:8000/evaluation_result')
-          // .then() runs when the request is successful (HTTP 2xx status)
+        
           .then((response) => {
-            console.log("✅ Data fetched successfully:");
+            console.log("Data fetched successfully:");
             console.log("HTTP Status:", response.status);
             console.log("Data:", response.data);
             setResult(response.data)
             setLoading(false)
             setCurrentPage("result")
           })
-          // .catch() runs if the request fails or returns an error status (e.g., 4xx, 5xx)
+  
           .catch((error) => {
             console.error("❌ Error fetching data:", error.message);
             if (error.response) {
@@ -247,6 +248,10 @@ function App() {
         console.error("Error:", error.message);
       }
       throw error;
+    }
+
+    if (loading){
+      return <SplashScreen isVisible={loading} />
     }
 
     // // Simulate API Call

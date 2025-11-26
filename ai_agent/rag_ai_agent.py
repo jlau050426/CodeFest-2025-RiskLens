@@ -155,7 +155,7 @@ def risk_assesment_evaluation(all_info):
     - comment: brief explanation of the decision
     - risk_factor: risk factors such as gambling, low income, big purchase, luxury lifestyle
     - personality_insight: insight based on the personality analysis
-    - past_evaluation_reference: reference to past evaluation if any, and explain how it influenced the decision
+    - past_evaluation_reference: reference to past evaluation if any, and explain how it influenced the decisiongit pull origin main --allow-unrelated-histories
     Provide a detail explanation for comment, risk factor, personality insight in less than 50 words. """
 
     response = client.models.generate_content(

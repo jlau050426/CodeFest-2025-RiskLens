@@ -20,8 +20,6 @@ const StepPersonal = ({ formData, handleChange }) => (
         <input
           type="text"
           name="nric"
-          value={formData.nric}
-          onChange={handleChange}
           placeholder="e.g. 123456-13-7890"
         />
       </div>
@@ -31,19 +29,17 @@ const StepPersonal = ({ formData, handleChange }) => (
       <div className="form-group">
         <label>Phone Number</label>
         <textarea
-          name="permAddress"
+          name="phone no."
           rows="1"
-          value={formData.permAddress}
-          onChange={handleChange}
           placeholder="e.g. +60-12-3456789"
         />
       </div>
       <div className="form-group">
         <label>Email Address</label>
         <textarea
-          name="permAddress"
+          name="email"
           rows="1"
-          value={formData.permAddress}
+          value={formData.email}
           onChange={handleChange}
           placeholder="e.g. iamaboy1234@gmail.com"
         />
@@ -55,8 +51,7 @@ const StepPersonal = ({ formData, handleChange }) => (
       <textarea
         name="permAddress"
         rows="2"
-        value={formData.permAddress}
-        onChange={handleChange}
+    
       />
     </div>
     <div className="form-group">
@@ -64,8 +59,7 @@ const StepPersonal = ({ formData, handleChange }) => (
       <textarea
         name="currAddress"
         rows="2"
-        value={formData.currAddress}
-        onChange={handleChange}
+       
         placeholder="If different from above"
       />
     </div>

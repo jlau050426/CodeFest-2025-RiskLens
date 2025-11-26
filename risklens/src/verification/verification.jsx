@@ -6,7 +6,7 @@ import AdvancedFileUpload from "./advancedFileUpload";
 // --- WIZARD STEP 3: VERIFICATION ---
 const StepVerification = ({ formData, handleFileChange, handlePhotoCaptured }) => (
   <div className="fade-in">
-    <div className="form-group">
+    {/* <div className="form-group">
       <label>Proof of Income (Bank Statement PDF)</label>
       <div className="file-upload-box">
         <input type="file" accept=".pdf" onChange={(e) => handleFileChange(e, 'bankStatement')} />
@@ -19,13 +19,16 @@ const StepVerification = ({ formData, handleFileChange, handlePhotoCaptured }) =
         <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, 'transactionImg')} />
         <span>{formData.transactionImg ? `🖼️ ${formData.transactionImg.name}` : "📎 Upload Transaction Screenshot"}</span>
       </div>
-    </div>
+    </div> */}
 
     <AdvancedFileUpload/>
-    <div className="form-group">
+
+
+
+    {/* <div className="form-group">
       <label>Liveness Check (Robot Detection)</label>
       <ActivityCamera onCapture={handlePhotoCaptured} />
-    </div>
+    </div> */}
   </div>
 );
 

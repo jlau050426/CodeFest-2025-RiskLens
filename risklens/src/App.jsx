@@ -4,7 +4,7 @@ import StepFinancial from './financial/financial';
 import StepVerification from './verification/verification';
 import StepBehavioral from './behavioral/behavioral';
 import ResultPage from './result_dashboard/result_dashboard';
-
+import axios from 'axios';
 import { useState} from 'react';
 import './App.css';
 
@@ -87,14 +87,14 @@ function App() {
     permAddress: "",
     currAddress: "",
     dateOfBirth: "",
-    maritalStatus: "Single",
+    maritalStatus: "",
     dependents: 0,
     residenceLength: "",
-    employment: "Employed", // Moved here as per request
+    employment: "", // Moved here as per request
     
     // Step 2: Financial
-    salary: 60000,
-    debt: 1500,
+    salary: 0,
+    debt: 0,
     creditScore: 720,
     employerName: "",
 
@@ -115,8 +115,49 @@ function App() {
   const analyzeRisk = async () => {
     setLoading(true);
 
-    const postData = new FormData();
-    postData.append()
+    const infoData = {
+      name: formData.fullName,
+      age: 0,
+      email: formData.email,
+      gross_monthly_income: formData.salary,
+      employment_status: formData.employment,
+      company_name: formData.employerName,
+      website_url: "http://xenber.com/",
+      loan_purpose: formData.essay,
+      social_links: ["https://www.linkedin.com/in/joseph-lau-9a4ba526a/"]
+    }
+
+    console.log("posting: ", infoData)
+    console.log("formdata: ", formData)
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/start_evaluation', infoData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status >= 200 && response.status < 300) {
+        return response.data;
+      } else {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+    } catch (error) {
+       if (error.response) {
+      // Server responded with error status
+      console.error('Server error:', error.response.data);
+      console.error('Status:', error.response.status);
+    } else if (error.request) {
+      // Request made but no response received
+      console.error('No response received:', error.request);
+    } else {
+      // Something else happened
+      console.error('Error:', error.message);
+    }
+    throw error;
+    }
+
     // // Simulate API Call
     // console.log(formData)
     // setTimeout(() => {

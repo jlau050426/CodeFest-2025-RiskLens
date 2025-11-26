@@ -7,11 +7,12 @@ import ResultPage from "./result_dashboard/result_dashboard";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./App.css";
+import DarkQuizComponent from "./quiz/quiz";
 
 const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
   const [step, setStep] = useState(1);
   const [showQuiz, setShowQuiz] = useState(false);
-  const TOTAL_STEPS = 4;
+  const TOTAL_STEPS = 5;
 
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -32,7 +33,6 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log("formdata: ", formData);
   };
   const handleFileChange = (e, field) => {
     setFormData({ ...formData, [field]: e.target.files[0] });
@@ -57,7 +57,7 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
             {step === 2 && "💰 Financial Profile"}
             {step === 3 && "🔐 Verification"}
             {step === 4 && "🧠 Behavioral Analysis"}
-            {/* {step === 5 && "🧠 Quick Questions"} */}
+            {step === 5 && "🧠 Quick Questions"}
           </h2>
           <div className="progress-bar">
             <div
@@ -87,6 +87,9 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
               handleChange={handleChange}
               openQuiz={() => setShowQuiz(true)}
             />
+          )}
+          {step === 5 && (
+            <DarkQuizComponent/>
           )}
         </div>
 

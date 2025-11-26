@@ -549,7 +549,7 @@ textarea:focus {
 
 .split-result {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  /* grid-template-columns: 1.5fr 1fr; */
   /* Chart gets more space */
   gap: 20px;
   margin-bottom: 20px;

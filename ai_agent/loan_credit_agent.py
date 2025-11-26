@@ -79,7 +79,6 @@ def loan_credit_chain(name, age, email, gross_monthly_income, employment_status,
         # store the risk assessment evaluation into the database
         evaluation_store = store_evaluation(evaluation_result)
         # if the database exceed a certain limit, summarise the data and remove the old data
-
         return evaluation_result
     except Exception as e:
         print(f'Error: {e}')

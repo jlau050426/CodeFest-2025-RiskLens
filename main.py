@@ -11,6 +11,9 @@ from models.UserBaseModel import UserBaseModel
 from ai_agent.loan_credit_agent import loan_credit_chain, evaluate_test_score
 from utils.utils import remove_db, remove_folder
 import os
+from ai_agent.database_learning_agent import consolidate_memory
+from langchain_community.vectorstores import FAISS
+
 app = FastAPI()
 origins = [
     "http://localhost:3000",
@@ -101,6 +104,9 @@ async def test_score(score: int):
     evaluate_test_score(score)
 @app.post("/quit")
 async def quite_program():
-    remove_folder("./files/client")
-    remove_folder("./image")
-    remove_db("./db/customer_db")
+    evaluation_db_path = os.path.abspath("./db/evaluation_db")
+    # consolidate database
+    consolidate_memory()
+    # remove_folder("./files/client")
+    # remove_folder("./image")
+    # remove_db("./db/customer_db")

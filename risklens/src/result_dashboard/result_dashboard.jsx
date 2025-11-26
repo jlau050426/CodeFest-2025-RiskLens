@@ -1,6 +1,6 @@
 import "./result_dashboard.css";
 import "../../src/App.css";
-
+import '../../src/index.css'
 import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, 
   PieChart, Pie, Cell,
@@ -19,13 +19,13 @@ const ResultPage = ({ result, formData, onBack }) => {
   ];
 
   const financialData = [
-    { name: 'Score', value: result.finance_score, color: '#10b981' },
-    { name: 'Remaining', value: 100 - result.finance_score, color: 'rgba(255,255,255,0.1)' }
+    { name: 'Score', value: result.credit_score, color: '#10b981' },
+    { name: 'Remaining', value: 100 - result.credit_score, color: 'rgba(255,255,255,0.1)' }
   ];
 
   const aiRiskData = [
-    { name: 'Score', value: result.ai_risk_score, color: '#ef4444' },
-    { name: 'Remaining', value: 100 - result.ai_risk_score, color: 'rgba(255,255,255,0.1)' }
+    { name: 'Score', value: result.credit_score, color: '#ef4444' },
+    { name: 'Remaining', value: 100 - result.credit_score, color: 'rgba(255,255,255,0.1)' }
   ];
 
   const renderHighlightedEssay = (text, riskyWords) => {
@@ -50,7 +50,7 @@ const ResultPage = ({ result, formData, onBack }) => {
         </div>
 
         <div className="split-result">
-          <div className="chart-container">
+          {/* <div className="chart-container">
             <h3>🧠 5C's Credit Analysis</h3>
             <div style={{ width: '100%', height: 250 }}>
               <ResponsiveContainer>
@@ -65,11 +65,11 @@ const ResultPage = ({ result, formData, onBack }) => {
             {formData.activityTags.length > 0 && (
               <div className="vision-summary"><small>📸 Verified: {formData.activityTags.join(", ")}</small></div>
             )}
-          </div>
+          </div> */}
 
-          <div className="metrics-column">
+          <div className="flex flex-column width-full">
             <div className="metric-box chart-metric">
-              <span className="label">Capacity Score</span>
+              <span className="label">Credit Score</span>
               <div className="pie-chart-wrapper">
                 <ResponsiveContainer width="100%" height={100}>
                   <PieChart>
@@ -82,25 +82,15 @@ const ResultPage = ({ result, formData, onBack }) => {
               </div>
             </div>
 
-            <div className="metric-box chart-metric">
-              <span className="label">Behavioral Risk</span>
-              <div className="pie-chart-wrapper">
-                <ResponsiveContainer width="100%" height={100}>
-                  <PieChart>
-                    <Pie data={aiRiskData} cx="50%" cy="50%" innerRadius={35} outerRadius={45} startAngle={90} endAngle={-270} dataKey="value">
-                      {aiRiskData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-                <div className="pie-value"><span className="value text-red">{result.ai_risk_score}</span></div>
-              </div>
-            </div>
+          
           </div>
         </div>
 
         <div className="transparency-box">
           <p><strong>⚠️ Risk Factors Detected (NLP Analysis):</strong></p>
-          {renderHighlightedEssay(formData.essay, result.risky_words)}
+          {/* {renderHighlightedEssay(result.comment, result.risk_factor)} */}
+          <p>Comment: {result.comment}</p>
+          <p>Risk factors: {result.risk_factor}</p>
         </div>
       </section>
 

@@ -1,11 +1,12 @@
 class User:
-    def __init__(self, name, age, email, gross_monthly_income, employment_status, loan_purpose):
+    def __init__(self, name, age, email, gross_monthly_income, employment_status, loan_purpose, month_debt=None):
         self.name = name
         self.age = age
         self.email = email
         self.gross_monthly_income = gross_monthly_income
         self.employment_status = employment_status
         self.loan_purpose = loan_purpose
+        self.month_debt = month_debt
 
     def to_string(self):
         return (f"Name: {self.name}\n"

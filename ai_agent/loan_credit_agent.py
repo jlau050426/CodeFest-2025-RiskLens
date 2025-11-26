@@ -29,7 +29,7 @@ def evaluate_test_score(test_score):
     print(personality_result)
 
 
-def loan_credit_chain(name, age, email, gross_monthly_income, employment_status, company_name, website_url, loan_purpose, social_links):
+def loan_credit_chain(name, age, email, gross_monthly_income, employment_status, company_name, website_url, loan_purpose, social_links, month_debt):
     # receive company info
     # company info is saved into the database
     result = store_company_document()
@@ -37,7 +37,7 @@ def loan_credit_chain(name, age, email, gross_monthly_income, employment_status,
     customer_result = store_customer_document()
     # agent research for the background of the user based on the social media link / company link provided
     # receive user data
-    user = User(name, age, email, gross_monthly_income, employment_status, loan_purpose)
+    user = User(name, age, email, gross_monthly_income, employment_status, loan_purpose, month_debt)
     # agent can analyze image provided by the user -> the picture is valid or not? create user financial profile
     image_result = evaluate_image()
     company = Company(company_name, website_url)

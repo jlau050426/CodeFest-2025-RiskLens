@@ -17,7 +17,7 @@ def get_links_detail(company: str, website: Website):
         "type": "home page"
     }"""
 
-    chat = client.chats.create(model="gemini-2.5-flash", config=types.GenerateContentConfig(
+    chat = client.chats.create(model="gemini-2.5-pro", config=types.GenerateContentConfig(
         response_mime_type="application/json",
         system_instruction=sys_prop
     ))

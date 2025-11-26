@@ -81,7 +81,8 @@ async def start_evaluation(user_data: UserBaseModel):
         company_name=user_data_dict["company_name"],
         website_url=user_data_dict["website_url"],
         loan_purpose=user_data_dict["loan_purpose"],
-        social_links=user_data_dict["social_links"]
+        social_links=user_data_dict["social_links"],
+        month_debt=user_data_dict["monthly_debt"]
     )
     print("Evaluation Result Data:")
     print("--" * 100)
@@ -107,6 +108,6 @@ async def quite_program():
     evaluation_db_path = os.path.abspath("./db/evaluation_db")
     # consolidate database
     consolidate_memory()
-    # remove_folder("./files/client")
-    # remove_folder("./image")
-    # remove_db("./db/customer_db")
+    remove_folder("./files/client")
+    remove_folder("./image")
+    remove_db("./db/customer_db")

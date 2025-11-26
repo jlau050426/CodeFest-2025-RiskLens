@@ -20,7 +20,7 @@ def consolidate_memory():
     vector_db = FAISS.load_local("db/evaluation_db", embeddings, allow_dangerous_deserialization=True)
     # 1. FIND STALE DATA
     # Filter for data older than 7 days that hasn't been summarized yet
-    cutoff_date = time.time() - (60)
+    cutoff_date = time.time() - (24 * 7 * 60 * 60)
     print("the cut off date is ", cutoff_date)
     old_records = vector_db.similarity_search(
         query=f"find the document chunks that have timestamp older than {cutoff_date} second"
@@ -38,7 +38,7 @@ def consolidate_memory():
                    "facts, dates, and technical details. Discard conversational fluff.")
     # 3. SUMMARIZE (LLM)
     summary = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-pro",
         contents=f"{user_prompt} The data is as: {combined_text}. Limit the summary to 100 words "
     )
 

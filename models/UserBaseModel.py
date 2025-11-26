@@ -12,3 +12,4 @@ class UserBaseModel(BaseModel):
     website_url: str
     social_links: List[str]
     income_source: str | None = None
+    month_debt: float | None = None

@@ -12,10 +12,6 @@ const StepFinancial = ({ formData, handleChange }) => (
       <input type="number" name="debt" value={formData.debt} onChange={handleChange} />
     </div>
     <div className="form-group">
-      <label>Credit Score (Estimate)</label>
-      <input type="number" name="creditScore" value={formData.creditScore} onChange={handleChange} />
-    </div>
-    <div className="form-group">
       <label>Employer / Business Name</label>
       <input type="text" name="employerName" value={formData.employerName} onChange={handleChange} placeholder="Company Name" />
     </div>

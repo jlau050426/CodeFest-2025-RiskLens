@@ -89,7 +89,7 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
             />
           )}
           {step === 5 && (
-            <DarkQuizComponent/>
+            <DarkQuizComponent />
           )}
         </div>
 
@@ -122,9 +122,22 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
         </div>
       </section>
 
-      
+
     </div>
   );
+};
+
+// Helper function to calculate age from date of birth
+const calculateAge = (dateOfBirth) => {
+  if (!dateOfBirth) return 0;
+  const today = new Date();
+  const birthDate = new Date(dateOfBirth);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 };
 
 // --- MAIN APP CONTROLLER ---
@@ -144,11 +157,11 @@ function App() {
     dependents: 0,
     residenceLength: "",
     employment: "", // Moved here as per request
+    socialLinks: "",
 
     // Step 2: Financial
     salary: 0,
     debt: 0,
-    creditScore: 720,
     employerName: "",
 
     // Step 3: Verification
@@ -160,6 +173,7 @@ function App() {
     // Step 4: Behavioral
     mbti: "",
     essay: "",
+    websiteUrl: "",
   });
 
   const [result, setResult] = useState(null);
@@ -167,17 +181,17 @@ function App() {
 
   const analyzeRisk = async () => {
     setLoading(true);
-
+    const socialLinks = formData.socialLinks ? formData.socialLinks.split('\n').filter(link => link.trim()).map(link => link.trim()) : [];
     const infoData = {
       name: formData.fullName,
-      age: 25,
+      age: calculateAge(formData.dateOfBirth),
       email: formData.email,
       gross_monthly_income: formData.salary,
       employment_status: formData.employment,
       company_name: formData.employerName,
-      website_url: "http://xenber.com/",
+      website_url: formData.websiteUrl,
       loan_purpose: formData.essay,
-      social_links: ["https://www.linkedin.com/in/joseph-lau-9a4ba526a/"],
+      social_links: socialLinks,
     };
 
     console.log("posting: ", infoData);
@@ -216,7 +230,7 @@ function App() {
             }
           });
 
-        
+
       } else {
         throw new Error(`Request failed with status ${response.status}`);
       }

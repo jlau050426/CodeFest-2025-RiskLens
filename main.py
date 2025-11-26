@@ -82,7 +82,7 @@ async def start_evaluation(user_data: UserBaseModel):
         website_url=user_data_dict["website_url"],
         loan_purpose=user_data_dict["loan_purpose"],
         social_links=user_data_dict["social_links"],
-        month_debt=user_data_dict["monthly_debt"]
+        month_debt=user_data_dict["month_debt"]
     )
     print("Evaluation Result Data:")
     print("--" * 100)

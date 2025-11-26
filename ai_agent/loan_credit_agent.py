@@ -29,7 +29,7 @@ def evaluate_test_score(test_score):
     print(personality_result)
 
 
-def loan_credit_chain(name, age, email, gross_monthly_income, employment_status, company_name, website_url, loan_purpose, social_links, month_debt):
+def loan_credit_chain(name, age, email, gross_monthly_income, employment_status, company_name, website_url, loan_purpose, social_links, month_debt=None):
     # receive company info
     # company info is saved into the database
     result = store_company_document()

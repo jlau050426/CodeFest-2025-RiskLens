@@ -11,13 +11,8 @@ const AdvancedFileUpload = () => {
   const handleFiles = useCallback((newFiles) => {
     const validFiles = Array.from(newFiles).filter(file => {
       const validTypes = [
-        'image/jpeg', 
-        'image/png', 
-        'image/gif', 
+       // 'image/png', 
         'application/pdf',
-        'text/plain',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       ];
       const maxSize = 10 * 1024 * 1024; // 10MB
 
@@ -68,11 +63,12 @@ const AdvancedFileUpload = () => {
 
   const uploadFile = async (fileItem) => {
     const formData = new FormData();
-    formData.append('file', fileItem.file);
+    formData.append('files', fileItem.file);
+    console.log(formData);
 
     try {
         console.log("posting")
-      const response = await axios.post('/api/upload', formData, {
+      const response = await axios.post('http://127.0.0.1:8000/upload-customer-pdf', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -137,7 +133,7 @@ const AdvancedFileUpload = () => {
         <div className="drop-zone-content">
           <span className="upload-icon">📁</span>
           <h3>Drop files here or click to browse</h3>
-          <p>Supported formats: Images, PDF, DOC, TXT (Max 10MB each)</p>
+          <p>We love PDF ... So only PDFs are supported</p>
         </div>
       </div>
 

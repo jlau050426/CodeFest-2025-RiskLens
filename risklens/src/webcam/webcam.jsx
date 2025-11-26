@@ -1,5 +1,5 @@
 import "./webcam.css";
-
+import Webcam from "react-webcam";
 //useState: for remembering state in functional componentss
 //useRef: to reference DOM elements or persist values across renders
 //useCallback: to memoize functions and prevent unnecessary re-creations
@@ -21,14 +21,17 @@ const ActivityCamera = ({ onCapture }) => {
     const imageSrc = webcamRef.current.getScreenshot(); //imageSource will be taken from screenshots
     setImgSrc(imageSrc);
     setAnalyzing(true);
+    onCapture(imageSrc, []);
 
     // Simulate Backend Computer Vision Analysis
-    setTimeout(() => {
-      setAnalyzing(false);
-      const mockTags = ["Luxury Watch", "Designer Bag", "Coffee Shop"]; //hard coded results
-      setDetectedTags(mockTags);
-      onCapture(imageSrc, mockTags);
-    }, 1500); // the processing delay is fake with approximately 1.5 seconds
+    // setTimeout(() => {
+    //   setAnalyzing(false);
+    //   const mockTags = ["Luxury Watch", "Designer Bag", "Coffee Shop"]; //hard coded results
+    //   setDetectedTags(mockTags);
+    //   onCapture(imageSrc, mockTags);
+    // }, 1500); // the processing delay is fake with approximately 1.5 seconds
+
+
   }, [webcamRef, onCapture]);
 
 

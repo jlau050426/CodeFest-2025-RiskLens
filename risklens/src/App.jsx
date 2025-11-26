@@ -8,6 +8,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "./App.css";
 import DarkQuizComponent from "./quiz/quiz";
+import SplashScreen from "./splash";
 
 const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
   const [step, setStep] = useState(1);
@@ -89,7 +90,7 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
             />
           )}
           {step === 5 && (
-            <DarkQuizComponent/>
+            <DarkQuizComponent />
           )}
         </div>
 
@@ -116,15 +117,28 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
               onClick={onAnalyze}
               disabled={loading}
             >
-              {loading ? "🔄 Processing..." : "🚀 Run Risk Engine"}
+              {loading ? <><SplashScreen isVisible={loading} /></> : "🚀 Run Risk Engine"}
             </button>
           )}
         </div>
       </section>
 
-      
+
     </div>
   );
+};
+
+// Helper function to calculate age from date of birth
+const calculateAge = (dateOfBirth) => {
+  if (!dateOfBirth) return 0;
+  const today = new Date();
+  const birthDate = new Date(dateOfBirth);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 };
 
 // --- MAIN APP CONTROLLER ---
@@ -144,11 +158,11 @@ function App() {
     dependents: 0,
     residenceLength: "",
     employment: "", // Moved here as per request
+    socialLinks: "",
 
     // Step 2: Financial
     salary: 0,
     debt: 0,
-    creditScore: 720,
     employerName: "",
 
     // Step 3: Verification
@@ -160,6 +174,7 @@ function App() {
     // Step 4: Behavioral
     mbti: "",
     essay: "",
+    websiteUrl: "",
   });
 
   const [result, setResult] = useState(null);
@@ -167,17 +182,17 @@ function App() {
 
   const analyzeRisk = async () => {
     setLoading(true);
-
+    const socialLinks = formData.socialLinks ? formData.socialLinks.split('\n').filter(link => link.trim()).map(link => link.trim()) : [];
     const infoData = {
       name: formData.fullName,
-      age: 25,
+      age: calculateAge(formData.dateOfBirth),
       email: formData.email,
       gross_monthly_income: formData.salary,
       employment_status: formData.employment,
       company_name: formData.employerName,
-      website_url: "http://xenber.com/",
+      website_url: formData.websiteUrl,
       loan_purpose: formData.essay,
-      social_links: ["https://www.linkedin.com/in/joseph-lau-9a4ba526a/"],
+      social_links: socialLinks,
     };
 
     console.log("posting: ", infoData);
@@ -199,16 +214,16 @@ function App() {
 
         axios
           .get('http://127.0.0.1:8000/evaluation_result')
-          // .then() runs when the request is successful (HTTP 2xx status)
+        
           .then((response) => {
-            console.log("✅ Data fetched successfully:");
+            console.log("Data fetched successfully:");
             console.log("HTTP Status:", response.status);
             console.log("Data:", response.data);
             setResult(response.data)
             setLoading(false)
             setCurrentPage("result")
           })
-          // .catch() runs if the request fails or returns an error status (e.g., 4xx, 5xx)
+  
           .catch((error) => {
             console.error("❌ Error fetching data:", error.message);
             if (error.response) {
@@ -216,7 +231,7 @@ function App() {
             }
           });
 
-        
+
       } else {
         throw new Error(`Request failed with status ${response.status}`);
       }
@@ -233,6 +248,10 @@ function App() {
         console.error("Error:", error.message);
       }
       throw error;
+    }
+
+    if (loading){
+      return <SplashScreen isVisible={loading} />
     }
 
     // // Simulate API Call

@@ -51,7 +51,7 @@ const StepPersonal = ({ formData, handleChange }) => (
       <textarea
         name="permAddress"
         rows="2"
-    
+
       />
     </div>
     <div className="form-group">
@@ -59,9 +59,22 @@ const StepPersonal = ({ formData, handleChange }) => (
       <textarea
         name="currAddress"
         rows="2"
-       
+
         placeholder="If different from above"
       />
+    </div>
+    <div className="form-group">
+      <label>Social Links (Optional - one per line)</label>
+      <textarea
+        name="socialLinks"
+        rows="3"
+        value={formData.socialLinks}
+        onChange={handleChange}
+        placeholder="Enter each social link on a new line, e.g.&#10;https://linkedin.com/in/your-profile&#10;https://github.com/your-username"
+      />
+      <small style={{ color: '#888', marginTop: '4px', display: 'block' }}>
+        Add multiple links by pressing Enter after each one
+      </small>
     </div>
 
     <div className="form-row three-col">
@@ -96,6 +109,7 @@ const StepPersonal = ({ formData, handleChange }) => (
           name="dependents"
           value={formData.dependents}
           onChange={handleChange}
+          min={0}
         />
       </div>
     </div>

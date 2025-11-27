@@ -108,7 +108,7 @@ const AdvancedFileUpload = () => {
   };
 
   const uploadAllFiles = async () => {
-    
+
     setIsUploading(true);
     const pendingFiles = files.filter((f) => f.status === "pending");
 
@@ -168,7 +168,7 @@ const AdvancedFileUpload = () => {
         <div className="drop-zone-content">
           <span className="upload-icon">📁</span>
           <h3>Drop files here or click to browse</h3>
-          <p>We love PDF ... So only PDFs are supported</p>
+          <p>Bank Statement, Income Statement, EPF Statement, Company Statement (PDF only)</p>
         </div>
       </div>
 
@@ -233,9 +233,8 @@ const AdvancedFileUpload = () => {
         >
           {isUploading
             ? "Uploading..."
-            : `Upload All (${
-                files.filter((f) => f.status === "pending").length
-              })`}
+            : `Upload All (${files.filter((f) => f.status === "pending").length
+            })`}
         </button>
       )}
 

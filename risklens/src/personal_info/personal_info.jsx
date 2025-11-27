@@ -83,8 +83,8 @@ const StepPersonal = ({ formData, handleChange }) => (
         <label>Date of Birth</label>
         <input
           type="date"
-          name="dob"
-          value={formData.dob}
+          name="dateOfBirth"
+          value={formData.dateOfBirth}
           onChange={handleChange}
           required
         />

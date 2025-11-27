@@ -157,7 +157,7 @@ function App() {
     maritalStatus: "",
     dependents: 0,
     residenceLength: "",
-    employment: "", // Moved here as per request
+    employment: "Employed", // Moved here as per request
     socialLinks: "",
 
     // Step 2: Financial

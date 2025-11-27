@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import DarkQuizComponent from "./quiz/quiz";
 import SplashScreen from "./splash";
-import NoRefreshWarning from "./NoRefreshWarning";
+
 
 const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
   const [step, setStep] = useState(1);
@@ -58,7 +58,7 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
             {step === 1 && "👤 Personal Information"}
             {step === 2 && "💰 Financial Profile"}
             {step === 3 && "🔐 Verification"}
-            {step === 4 && "🧠 Behavioral Analysis"}
+            {step === 4 && "🫰Tell us why"}
             {step === 5 && "🧠 Quick Questions"}
           </h2>
           <div className="progress-bar">
@@ -189,6 +189,7 @@ function App() {
       age: calculateAge(formData.dateOfBirth),
       email: formData.email,
       gross_monthly_income: formData.salary,
+      month_debt: formData.debt,
       employment_status: formData.employment,
       company_name: formData.employerName,
       website_url: formData.websiteUrl,

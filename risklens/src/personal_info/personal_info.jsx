@@ -64,7 +64,7 @@ const StepPersonal = ({ formData, handleChange }) => (
       />
     </div>
     <div className="form-group">
-      <label>Social Links (Optional - one per line)</label>
+      <label>Social Links (one per line)</label>
       <textarea
         name="socialLinks"
         rows="3"

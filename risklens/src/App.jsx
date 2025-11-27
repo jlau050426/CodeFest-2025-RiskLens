@@ -28,9 +28,9 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
       // event.returnValue = '';
     };
     window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
+    // return () => {
+    //   window.removeEventListener("beforeunload", handleBeforeUnload);
+    // };
   }, []);
 
   const handleChange = (e) => {

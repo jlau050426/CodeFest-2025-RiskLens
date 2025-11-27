@@ -52,7 +52,10 @@ def loan_credit_chain(name, age, email, gross_monthly_income, employment_status,
         retrieved_customer_info = retrieve_docs(
             user.loan_purpose + "Search for the that is needed to evalute the person's risk credit", action="customer")
         # retrieve the past risk assessment evaluation from the database
-        past_evaluation = retrieve_docs(user.loan_purpose + "Retreive the related info that can evaluate the loan purpose",
+        past_evaluation = retrieve_docs(user.loan_purpose + "Retreive the related info that can evaluate the loan purpose."
+                                                            "The info retrieved could be from the different users. So don't "
+                                                            "compare the similarity of the user. For example the financial background of the user. "
+                                                            "Just provide the useful info that can help in the loan evaluation.",
                                         action="evaluation")
         # restructure the data
         combined_info = {

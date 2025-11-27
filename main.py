@@ -106,8 +106,10 @@ async def test_score(score: int):
 @app.post("/quit")
 async def quite_program():
     evaluation_db_path = os.path.abspath("./db/evaluation_db")
+    print("quiting the program....")
     # consolidate database
     consolidate_memory()
+
     remove_folder("./files/client")
     remove_folder("./image")
     remove_db("./db/customer_db")

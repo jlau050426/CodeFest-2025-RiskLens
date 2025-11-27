@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import DarkQuizComponent from "./quiz/quiz";
 import SplashScreen from "./splash";
+import NoRefreshWarning from "./NoRefreshWarning";
 
 const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
   const [step, setStep] = useState(1);
@@ -117,7 +118,7 @@ const InputPage = ({ formData, setFormData, onAnalyze, loading }) => {
               onClick={onAnalyze}
               disabled={loading}
             >
-              {loading ? <><SplashScreen isVisible={loading} /></> : "🚀 Run Risk Engine"}
+              {loading ? "Loading..." : "🚀 Run Risk Engine"}
             </button>
           )}
         </div>
@@ -244,15 +245,11 @@ function App() {
         // Request made but no response received
         console.error("No response received:", error.request);
       } else {
-        // Something else happened
         console.error("Error:", error.message);
       }
       throw error;
     }
 
-    if (loading){
-      return <SplashScreen isVisible={loading} />
-    }
 
     // // Simulate API Call
     // console.log(formData)
@@ -279,20 +276,33 @@ function App() {
         </div>
       </header>
 
-      {currentPage === "input" ? (
-        <InputPage
-          formData={formData}
-          setFormData={setFormData}
-          onAnalyze={analyzeRisk}
-          loading={loading}
-        />
-      ) : (
-        <ResultPage
-          result={result}
-          formData={formData}
-          onBack={() => setCurrentPage("input")}
-        />
-      )}
+      
+      {loading ? (
+
+        <SplashScreen isVisible={loading}/>
+
+        ) : (
+
+          <> {currentPage === "input" ? (
+            <InputPage
+              formData={formData}
+              setFormData={setFormData}
+              onAnalyze={analyzeRisk}
+              loading={loading}
+            />
+          ) : (
+            <ResultPage
+              result={result}
+              formData={formData}
+              onBack={() => setCurrentPage("input")}
+            />
+          )}</>
+
+        )}
+
+      
+
+
     </div>
   );
 }

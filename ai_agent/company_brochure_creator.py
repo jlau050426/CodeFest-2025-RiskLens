@@ -7,8 +7,13 @@ from models.Website import Website
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
+def validate_website_url(website: Website):
+    if not hasattr(website, 'url') or not website.url or not isinstance(website.url, str) or website.url.strip() == "":
+        raise ValueError("Website URL is missing or invalid.")
+
 # system prompt
 def get_links_detail(company: str, website: Website):
+    validate_website_url(website)
     sys_prop = ("you are a helpful assistant that helps users to summarize the content of a website. Besides, you "
                 "need to summarize the url links in the website: " + "".join(website.links))
     sys_prop += """You need to answer in json format like this: 
@@ -40,6 +45,7 @@ def user_prompt_create_broucher(company: str):
     return user_prompt
 
 def create_brochure(company: str, website: Website):
+    validate_website_url(website)
     user_prop = user_prompt_create_broucher(company) + "\n\n" + get_all_details(website, company)
     chat = client.chats.create(model="gemini-2.5-flash", config=types.GenerateContentConfig(
         response_mime_type="text/plain"
@@ -49,6 +55,7 @@ def create_brochure(company: str, website: Website):
     return response.text
 
 def get_all_details(website: Website, company):
+    validate_website_url(website)
     website_detail = "Landing page \n"
     website_detail += website.get_content()
     website_detail += "\n\nLinks detail \n"

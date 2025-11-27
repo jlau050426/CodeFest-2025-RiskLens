@@ -122,12 +122,12 @@ def summarise_important_key(prompt):
     print("Important key points summarised successfully.")
     return response
 
-def search_background(name: str, links: list):
+def search_background(website_url: str, name: str, links: list):
     system_prompt = system_instruction
-    user_prompt = "This is the links provided: " + ",".join(links) + "\n" + ("If you cannot find the exactly person, just say so. "
-                                                                             "You are allowed to not only use the provided links, "
-                                                                             "but also search the web to find relevant "
-                                                                             "information about the person based on the links provided.")
+    user_prompt = f"""
+    This is the links provided: {" ".join(links)}. This is the the person's business website url 
+    {website_url} If you cannot find the exactly person, just say so. You are allowed to not only use the provided links,
+    but also search the web to find relevant information about the person based on the links provided."""
     grounding_tool = types.Tool(
         google_search=types.GoogleSearch()
     )

@@ -40,12 +40,12 @@ def loan_credit_chain(name, age, email, gross_monthly_income, employment_status,
     user = User(name, age, email, gross_monthly_income, employment_status, loan_purpose, month_debt)
     # agent can analyze image provided by the user -> the picture is valid or not? create user financial profile
     image_result = evaluate_image()
-    company = Company(company_name, website_url)
-    website = Website(website_url)
-    background_result = search_background(links=social_links, name=name)
+    # company = Company(company_name, website_url)
+    # website = Website(website_url)
+    background_result = search_background(website_url=website_url, links=social_links, name=name)
     # company summation
     try:
-        company_summarization = create_brochure(company_name, website)
+        # company_summarization = create_brochure(company_name, website)
         # summarise background result, company summation, user info, picture, social media link, bank statement, salary slip, epf statement from databse(rag)
         retrieved_company_info = retrieve_docs(
             user.loan_purpose + "Search for the infomation that is related to personal loan", action="company")
@@ -57,7 +57,6 @@ def loan_credit_chain(name, age, email, gross_monthly_income, employment_status,
         # restructure the data
         combined_info = {
             "user_info": user.to_string(),
-            "company_summarization": company_summarization,
             "background_result": background_result,
             "personality_result": personality_result,
             "user_image_result": image_result,

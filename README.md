@@ -4,8 +4,8 @@
 This project is an intelligent loan processing application that leverages Generative AI (Google Gemini) and RAG (Retrieval-Augmented Generation) to analyze loan requests, retrieve context from vector databases, and provide automated risk scoring.
 
 ## 🏗️ System Architecture
-
-![System Architecture](software_architecture_diagram.png)
+You can click the link below to see the animations
+https://risk-len-software-architecture-model.josephlau2005.workers.dev/
 
 ### 🚀 Tech Stack
 

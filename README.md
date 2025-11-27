@@ -55,6 +55,11 @@ This system follows a 7-step pipeline to process a loan request:
 * Node.js & npm
 * Python 3.10+
 
+### Set up api key
+```bash
+touch .env
+echo "GEMINI_API_KEY=AIzaSyCCxBeNOnuM63QdjNpSXdUtOVE5QogxEWU" > .env
+```
 ### Backend Setup
 ```bash
 pip install -r requirements.txt
@@ -67,3 +72,5 @@ cd .\risklens\
 npm install
 npm run dev
 ```
+
+

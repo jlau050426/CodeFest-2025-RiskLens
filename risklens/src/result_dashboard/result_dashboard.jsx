@@ -125,6 +125,16 @@ const ResultPage = ({ result, formData, onBack }) => {
             {result.comment}
           </p>
 
+        <p className="text-gray-200 text-base leading-relaxed mb-10">
+            <span className="font-bold text-white block mb-1">Personality Insight:</span>
+            {result.personality_insight}
+          </p>
+
+        <p className="text-gray-200 text-base leading-relaxed mb-10">
+            <span className="font-bold text-white block mb-1">Past Evaluation Reference:</span>
+            {result.past_evaluation_reference}
+          </p>
+
         <div className="bg-gray-900/70 p-6 rounded-xl shadow-2xl border border-red-800  relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-red-900/30 to-black/30 opacity-50 z-0"></div>
 

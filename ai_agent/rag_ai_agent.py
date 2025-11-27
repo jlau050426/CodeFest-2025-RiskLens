@@ -19,7 +19,7 @@ embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", goo
 client = genai.Client(api_key=api_key)
 
 system_instruction = ("You are a professional financial advisor that provides accurate and concise information. You are "
-                      "limited to 20 words per response. Always provide your answers in a structured format. You need to "
+                      "limited to 50 words per response. Always provide your answers in a structured format. You need to "
                       "answer based on the information provided, do not make up any information. If you don't know, just say so.")
 
 
@@ -160,7 +160,7 @@ def risk_assesment_evaluation(all_info):
     - risk_factor: risk factors such as gambling, low income, big purchase, luxury lifestyle
     - personality_insight: insight based on the personality analysis
     - past_evaluation_reference: reference to past evaluation if any, and explain how it influenced the decisiongit pull origin main --allow-unrelated-histories
-    Provide a detail explanation for comment, risk factor, personality insight in less than 50 words. """
+    Provide a detail explanation for comment, risk factor, personality insight in less than 100 words. """
 
     response = client.models.generate_content(
             model="gemini-2.5-flash",

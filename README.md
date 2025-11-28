@@ -58,7 +58,7 @@ This system follows a 7-step pipeline to process a loan request:
 ### Set up api key
 ```bash
 touch .env
-echo "GEMINI_API_KEY=AIzaSyCCxBeNOnuM63QdjNpSXdUtOVE5QogxEWU" > .env
+echo "GEMINI_API_KEY={your_api_key}" > .env
 ```
 ### Backend Setup
 ```bash
